@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة أبو حازم الخارقة | النواة المركزية</title>
+    <style>
+        :root {
+            --bg-color: #05050a;
+            --primary-glow: #00ffcc;
+            --secondary-glow: #ff0055;
+            --text-color: #ffffff;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 10, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0,255,204,0.5);
+        }
+        .main-container {
+            text-align: center;
+            z-index: 1px;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        p {
+            font-size: 1.2rem;
+            color: #a0a0c0;
+            margin-bottom: 30px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .cyber-btn {
+            background: transparent;
+            color: var(--primary-glow);
+            border: 2px solid var(--primary-glow);
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0,255,204,0.2);
+            text-decoration: none;
+        }
+        .cyber-btn:hover {
+            background: var(--primary-glow);
+            color: var(--bg-color);
+            box-shadow: 0 0 30px var(--primary-glow);
+            transform: translateY(-3px);
+        }
+        .cyber-btn.alt {
+            color: var(--secondary-glow);
+            border-color: var(--secondary-glow);
+            box-shadow: 0 0 15px rgba(255,0,85,0.2);
+        }
+        .cyber-btn.alt:hover {
+            background: var(--secondary-glow);
+            color: var(--bg-color);
+            box-shadow: 0 0 30px var(--secondary-glow);
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: rgba(5, 5, 10, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            color: #707090;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- محرك الفيزياء المرعب (خلفية تفاعلية للجسيمات والجاذبية) -->
+    <canvas id="physicsCanvas"></canvas>
+
+    <header>
+        <div class="logo">أبو حازم العمري - NEXUS CORE</div>
+        <div style="font-size: 14px; color: #00ffcc;">الحالة: النظام يعمل بكفاءة 100%</div>
+    </header>
+
+    <div class="main-container">
+        <h1>منظومة البرمجيات الخارقة</h1>
+        <p>محرك فيزياء متقدم، روابط مباشرة، و100 ميزة هندسية مصممة للسيطرة الرقمية.</p>
+        
+        <div class="btn-group">
+            <a href="#download" class="cyber-btn" onclick="triggerPhysicsExplosion()">تحميل ملفات النظام (.ZIP)</a>
+            <a href="#features" class="cyber-btn alt">استعراض الميزات (100+)</a>
+        </div>
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة © إدارة وتطوير ابو حازم العمري 2026
+    </footer>
+
+    <script>
+        // --- محرك الفيزياء الجبار والجسيمات التفاعلية ---
+        const canvas = document.getElementById('physicsCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.clientX;
+            mouse.y = event.clientY;
+        });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor(x, y, size, color, speedX, speedY) {
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.color = color;
+                this.speedX = speedX;
+                this.speedY = speedY;
+                this.baseX = x;
+                this.baseY = y;
+                this.density = (Math.random() * 30) + 1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            update() {
+                // حساب مسافة الماوس لتطبيق تأثير الفيزياء المرعبة (تنافر الجسيمات)
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let forceDirectionX = dx / distance;
+                let forceDirectionY = dy / distance;
+                
+                let maxDistance = mouse.radius;
+                let force = (maxDistance - distance) / maxDistance;
+                
+                if (distance < mouse.radius) {
+                    this.x -= forceDirectionX * force * this.density * 0.6;
+                    this.y -= forceDirectionY * force * this.density * 0.6;
+                } else {
+                    if (this.x !== this.baseX) {
+                        let dx = this.x - this.baseX;
+                        this.x -= dx / 15;
+                    }
+                    if (this.y !== this.baseY) {
+                        let dy = this.y - this.baseY;
+                        this.y -= dy / 15;
+                    }
+                }
+
+                // الحركة المستمرة
+                this.baseX += this.speedX;
+                this.baseY += this.speedY;
+
+                if (this.baseX < 0 || this.baseX > canvas.width) this.speedX *= -1;
+                if (this.baseY < 0 || this.baseY > canvas.height) this.speedY *= -1;
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+                let size = Math.random() * 2 + 1;
+                let color = Math.random() > 0.5 ? '#00ffcc' : '#ff0055';
+                let speedX = (Math.random() - 0.5) * 1.5;
+                let speedY = (Math.random() - 0.5) * 1.5;
+                particlesArray.push(new Particle(x, y, size, color, speedX, speedY));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function triggerPhysicsExplosion() {
+            // تأثير تفاعل فيزيائي عند الضغط على زر التحميل
+            particlesArray.forEach(p => {
+                p.speedX += (Math.random() - 0.5) * 20;
+                p.speedY += (Math.random() - 0.5) * 20;
+            });
+            alert('تم تفعيل محرك الروابط المباشرة وتحميل الملفات!');
+        }
+
+        initParticles();
+        animate();
+    </script>
+</body>
+</html>
